@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:email-validator="http://www.mulesoft.org/schema/mule/email-validator"
+	xmlns:muleschool-custom="http://www.mulesoft.org/schema/mule/muleschool-custom"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/muleschool-custom http://www.mulesoft.org/schema/mule/muleschool-custom/current/mule-muleschool-custom.xsd
+http://www.mulesoft.org/schema/mule/email-validator http://www.mulesoft.org/schema/mule/email-validator/current/mule-email-validator.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="c251832b-2e1c-4643-852b-b388bda3d2d9" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="mule_java_main_assignmentFlow" doc:id="1f4f8e73-87eb-4e92-b1a1-b07692084333" >
+		<http:listener doc:name="Listener" doc:id="609523f6-dbff-40a5-8b0b-ecbbd87f3a36" config-ref="HTTP_Listener_config" path="/emailvalidator"/>
+		<email-validator:email-validator doc:name="Email validator" doc:id="2ac52350-5a60-4cec-ad57-7cd0a190fedd" email="#[payload.email]"/>
+		<ee:transform doc:name="Transform Message" doc:id="4b209b68-dea8-478c-96bb-f95b53edcdb3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

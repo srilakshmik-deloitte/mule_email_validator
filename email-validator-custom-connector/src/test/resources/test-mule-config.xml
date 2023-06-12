@@ -1,0 +1,19 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:email-validator="http://www.mulesoft.org/schema/mule/email-validator"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+          http://www.mulesoft.org/schema/mule/email-validator http://www.mulesoft.org/schema/mule/email-validator/current/mule-email-validator.xsd">
+
+    <email-validator:config name="config" configId="configId">
+        <email-validator:connection requiredParameter="aValue" />
+    </email-validator:config>
+
+    <flow name="sayHiFlow">
+        <email-validator:say-hi person="Mariano Gonzalez"/>
+    </flow>
+
+    <flow name="retrieveInfoFlow">
+        <email-validator:retrieve-info config-ref="config"/>
+    </flow>
+
+</mule>
